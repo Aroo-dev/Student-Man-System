@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -14,19 +16,21 @@ public class JWTHelper {
 
     private static final Algorithm algorithm = Algorithm.HMAC256(JWTUtil.SECRET);
 
+    private static final String ROLES = "roles";
+
 
     public String generateAccessToken(String email, List<String> roles){
         return JWT.create()
                 .withSubject(email)
-                .withExpiresAt(new Date(System.currentTimeMillis() + JWTUtil.EXPIRE_ACCESS_TOKEN))
+                .withExpiresAt( Instant.now().plusNanos(JWTUtil.EXPIRE_ACCESS_TOKEN))
                 .withIssuer(JWTUtil.ISSUER)
-                .withClaim("roles",roles)
+                .withClaim(ROLES,roles)
                 .sign(algorithm);
     }
 
     public String generateRefreshToken(String email){
         return JWT.create().withSubject(email)
-                .withExpiresAt(new Date(System.currentTimeMillis() + JWTUtil.EXPIRE_REFRESH_TOKEN))
+                .withExpiresAt(Instant.now().plusSeconds(JWTUtil.EXPIRE_REFRESH_TOKEN))
                 .withIssuer(JWTUtil.ISSUER)
                 .sign(algorithm);
     }

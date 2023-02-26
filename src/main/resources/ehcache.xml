@@ -1,0 +1,21 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.ehcache.org/v3"
+        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
+        xsi:schemaLocation="
+            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
+            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+
+    <cache-template name="default">
+        <expiry>
+            <tti unit="minutes">30</tti>
+        </expiry>
+        <heap unit="entries">1000</heap>
+
+    </cache-template>
+    <cache alias="CoursesByCourseName" uses-template="default"/>
+    <cache alias="CoursesForStudents" uses-template="default"/>
+    <cache alias="NotEnrolledCoursesForStudents" uses-template="default"/>
+
+
+
+</config>

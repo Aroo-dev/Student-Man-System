@@ -1,19 +1,14 @@
 package com.aro.javaadmin.role;
 
-import com.aro.javaadmin.user.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "rolxes")
+
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,13 +25,7 @@ public class Role {
 
 
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "roleId='" + roleId + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+
 
 
 }

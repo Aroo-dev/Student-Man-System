@@ -11,10 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class CacheConfig {
 
 
-    @Bean
-    public CacheManager cacheManager()
-    {
-        return new ConcurrentMapCacheManager("coursesCache");
-    }
+
+ 
 }
 //TODO add ehcache dependency, config xml for enchace provider.

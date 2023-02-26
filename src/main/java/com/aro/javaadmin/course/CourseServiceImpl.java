@@ -7,6 +7,7 @@ import com.aro.javaadmin.student.Student;
 import com.aro.javaadmin.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -62,7 +63,7 @@ public class CourseServiceImpl implements CourseService {
 
     // TODO adjust cache config to your requirements
 
-    @Cacheable(value = "coursesCache", key = "#courseName", unless = "#result == null")
+    @Cacheable(cacheNames = "CoursesByCourseName" , key = "#courseName")
     @Override
     public Page<CourseDTO> findCoursesByCourseName(String courseName, int page, int size) {
         PageRequest pageRequest = getPageRequest(page, size);
@@ -89,6 +90,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Cacheable(cacheNames = "CoursesForStudents", key = "#studentId")
     public Page<CourseDTO> fetchCoursesForStudents(Long studentId, int page, int size) {
 
         Page<Course> coursesByStudentId = courseRepository.findCoursesByStudentId(studentId, getPageRequest(page, size));
@@ -100,6 +102,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Cacheable(cacheNames = "NotEnrolledCoursesForStudents", key = "#studentId")
+    @CacheEvict
     public Page<CourseDTO> fetchNotEnrolledCoursesForStudents(Long studentId, int page, int size) {
         Page<Course> nonEnrolledCourses = courseRepository.getNonEnrolledCourses(studentId, getPageRequest(page, size));
         return new PageImpl<>(nonEnrolledCourses.getContent()

@@ -1,5 +1,6 @@
 package com.aro.javaadmin.instructor;
 
+import com.aro.javaadmin.email.EmailSenderService;
 import com.aro.javaadmin.course.Course;
 import com.aro.javaadmin.course.CourseService;
 import com.aro.javaadmin.exception.ResourceNotFoundException;
@@ -23,9 +24,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional
 @Service
- class InstructorServiceImpl implements InstructorService {
+class InstructorServiceImpl implements InstructorService {
     private static final Logger logger = LoggerFactory.getLogger(InstructorServiceImpl.class);
-
+    private final EmailSenderService emailSenderService;
     private final ModelMapper modelMapper;
     private final InstructorRepository instructorRepository;
     private final UserService userService;
@@ -35,11 +36,14 @@ import java.util.stream.Collectors;
     @Override
     public Page<InstructorDTO> findInstructorByNameOrLastName(String name, int page, int size) {
         Page<Instructor> instructorsFoundByFirstNameOrLastNameContaining =
-                instructorRepository.findInstructorByFirstNameOrLastNameContaining(name, PageRequest.of(page, size));
+                instructorRepository
+                        .findInstructorByFirstNameOrLastNameContaining(name, PageRequest.of(page, size));
         return new PageImpl<>(instructorsFoundByFirstNameOrLastNameContaining.getContent()
                 .stream()
                 .map(instructor -> modelMapper.map(instructor, InstructorDTO.class))
-                .collect(Collectors.toList()), PageRequest.of(page, size), instructorsFoundByFirstNameOrLastNameContaining.getTotalElements());
+                .collect(Collectors.toList()),
+                PageRequest.of(page, size),
+                instructorsFoundByFirstNameOrLastNameContaining.getTotalElements());
 
     }
 
@@ -48,7 +52,7 @@ import java.util.stream.Collectors;
         Instructor instructor = instructorRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Instructor", "id", id));
-        if (instructor == null){
+        if (instructor == null) {
             logger.warn("Instructor not found");
         }
 
@@ -62,17 +66,21 @@ import java.util.stream.Collectors;
     }
 
     public InstructorDTO createInstructor(InstructorDTO instructorDTO) {
-        User user = userService.createUser(instructorDTO.getUser().getEmail(), instructorDTO.getUser().getPassword());
+        User user = userService.
+                createUser(instructorDTO.getUser().getEmail(), instructorDTO.getUser().getPassword());
         userService.assignRoleToStudent(user.getEmail(), "Instructor");
         Instructor instructor = modelMapper.map(instructorDTO, Instructor.class);
         instructor.setUser(user);
         Instructor savedInstructor = instructorRepository.save(instructor);
+        emailSenderService.sendEmail(savedInstructor.getUser().getEmail(),
+                "Please consider changing your password." + " Your default password is " + savedInstructor.getUser().getPassword());
         return modelMapper.map(savedInstructor, InstructorDTO.class);
     }
 
     @Override
     public InstructorDTO updateInstructor(InstructorDTO instructorDTO, Authentication authentication) {
-        Instructor instructor = authenticationHelper.authenticateInstructor(instructorDTO, authentication);
+        Instructor instructor = authenticationHelper.
+                authenticateInstructor(instructorDTO, authentication);
         Instructor instructor1 = modelMapper.map(instructorDTO, Instructor.class);
         instructor1.setUser(instructor.getUser());
         instructor1.setCourses(instructor.getCourses());
@@ -98,7 +106,7 @@ import java.util.stream.Collectors;
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Instructor", "id", id));
 
-        for (Course course : instructor.getCourses()){
+        for (Course course : instructor.getCourses()) {
             courseService.removeCourse(course.getCourseId());
         }
         instructorRepository.deleteById(instructor.getInstructorId());

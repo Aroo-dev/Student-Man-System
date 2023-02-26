@@ -55,7 +55,6 @@ public class CourseDTO {
                 ", courseName='" + name + '\'' +
                 ", courseDuration='" + duration + '\'' +
                 ", courseDescription='" + description + '\'' +
-                ", instructor=" + instructor +
                 '}';
     }
 }

@@ -33,14 +33,13 @@ public class CustomRunner implements CommandLineRunner {
         createAdmin();
         createInstructor();
         createCourse();
-        createStudents();
+
     }
 
-    private void createCourse() {
 
-            StudentDTO studentDTO = new StudentDTO();
-        }
-        private void    createStudents() {
+
+
+        private void    createCourse() {
 
         for (int i = 0; i < 20; i++) {
             CourseDTO courseDTO = new CourseDTO("java"+1, Duration.ofMinutes(142), "String");
