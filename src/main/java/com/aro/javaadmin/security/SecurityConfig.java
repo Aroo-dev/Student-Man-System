@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
 
-    private final UserDetailsService userDetailsService;
 
     private final JWTHelper jwtHelper;
 

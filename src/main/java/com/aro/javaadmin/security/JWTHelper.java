@@ -9,12 +9,24 @@ import org.springframework.security.core.GrantedAuthority;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Configuration
 public class JWTHelper {
+    public static final long EXPIRE_ACCESS_TOKEN = TimeUnit.MINUTES.toNanos(10);
 
-    private static final Algorithm algorithm = Algorithm.HMAC256(JWTUtil.SECRET);
+    public static final long EXPIRE_REFRESH_TOKEN = TimeUnit.MINUTES.toNanos(1000);
+
+    public static final String ISSUER = "springBootApp";
+
+    public static final String BEARER_PREFIX = "Bearer ";
+
+    public static final String SECRET = "myPrivateSecret";
+
+    public static final String AUTH_HEADER = "Authorization";
+
+    private static final Algorithm algorithm = Algorithm.HMAC256(SECRET);
 
     private static final String ROLES = "roles";
 
@@ -22,22 +34,22 @@ public class JWTHelper {
     public String generateAccessToken(String email, List<String> roles){
         return JWT.create()
                 .withSubject(email)
-                .withExpiresAt( Instant.now().plusNanos(JWTUtil.EXPIRE_ACCESS_TOKEN))
-                .withIssuer(JWTUtil.ISSUER)
+                .withExpiresAt( Instant.now().plusNanos(EXPIRE_ACCESS_TOKEN))
+                .withIssuer(ISSUER)
                 .withClaim(ROLES,roles)
                 .sign(algorithm);
     }
 
     public String generateRefreshToken(String email){
         return JWT.create().withSubject(email)
-                .withExpiresAt(Instant.now().plusSeconds(JWTUtil.EXPIRE_REFRESH_TOKEN))
-                .withIssuer(JWTUtil.ISSUER)
+                .withExpiresAt(Instant.now().plusSeconds(EXPIRE_REFRESH_TOKEN))
+                .withIssuer(ISSUER)
                 .sign(algorithm);
     }
 
     public String extractTokenFromHeaderIfExist(String authorizationHeader){
-        if (authorizationHeader != null && authorizationHeader.startsWith(JWTUtil.BEARER_PREFIX)){
-            return authorizationHeader.substring(JWTUtil.BEARER_PREFIX.length());
+        if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)){
+            return authorizationHeader.substring(BEARER_PREFIX.length());
 
         }
         return null;

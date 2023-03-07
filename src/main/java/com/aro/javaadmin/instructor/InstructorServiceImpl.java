@@ -66,6 +66,7 @@ class InstructorServiceImpl implements InstructorService {
     }
 
     public InstructorDTO createInstructor(InstructorDTO instructorDTO) {
+        String password = instructorDTO.getUser().getPassword();
         User user = userService.
                 createUser(instructorDTO.getUser().getEmail(), instructorDTO.getUser().getPassword());
         userService.assignRoleToStudent(user.getEmail(), "Instructor");
@@ -73,7 +74,7 @@ class InstructorServiceImpl implements InstructorService {
         instructor.setUser(user);
         Instructor savedInstructor = instructorRepository.save(instructor);
         emailSenderService.sendEmail(savedInstructor.getUser().getEmail(),
-                "Please consider changing your password." + " Your default password is " + savedInstructor.getUser().getPassword());
+                "Please consider changing your password." + " Your default password is " + password);
         return modelMapper.map(savedInstructor, InstructorDTO.class);
     }
 

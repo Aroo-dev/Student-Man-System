@@ -1,7 +1,5 @@
 package com.aro.javaadmin.user;
 
-import java.util.Optional;
-
 public interface UserService {
 
 
