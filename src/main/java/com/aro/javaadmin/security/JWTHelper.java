@@ -60,7 +60,5 @@ public class JWTHelper {
         idToken.put("accessToken", jwtAccessToken);
         idToken.put("refreshToken", jwtRefreshToken);
         return idToken;
-
-
     }
 }
