@@ -14,13 +14,13 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @Configuration
 public class JWTHelper {
-    public static final long EXPIRE_ACCESS_TOKEN = TimeUnit.MINUTES.toNanos(10);
+    private static final long EXPIRE_ACCESS_TOKEN = TimeUnit.MINUTES.toNanos(10);
 
-    public static final long EXPIRE_REFRESH_TOKEN = TimeUnit.MINUTES.toNanos(1000);
+    private static final long EXPIRE_REFRESH_TOKEN = TimeUnit.MINUTES.toNanos(1000);
 
-    public static final String ISSUER = "springBootApp";
+    private static final String ISSUER = "springBootApp";
 
-    public static final String BEARER_PREFIX = "Bearer ";
+    private static final String BEARER_PREFIX = "Bearer ";
 
     public static final String SECRET = "myPrivateSecret";
 
