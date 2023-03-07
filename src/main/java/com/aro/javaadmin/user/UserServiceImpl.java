@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser( String email, String password) {
+        //TODO generate random password by default, and then send it to user so he/she can change it
         String encodedPassword = passwordEncoder.encode(password);
         return userRepository.save( new User(email, encodedPassword));
     }

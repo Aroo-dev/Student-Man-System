@@ -17,4 +17,6 @@ public class GlobalConfigClass {
     ModelMapper modelMapper(){
         return new ModelMapper();
     }
+
+    //TODO change dtos in every class. for now it stays this way
 }
