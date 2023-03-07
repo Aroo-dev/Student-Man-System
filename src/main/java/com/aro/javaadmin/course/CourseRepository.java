@@ -22,8 +22,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     Page<Course> findCoursesByInstructorInstructorId( Long instructorId, Pageable pageable);
 
-//    @Query(value = "SELECT i from Course  as i where i.students.=:email")
-//    void findCoursesBys(Long studentId);
+
 
 
 }

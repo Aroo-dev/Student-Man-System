@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class EmailSenderService {
 
     private static final String HOST_EMAIL = "axxrxxo@gmail.com";
-    public static final String WELCOME_SUBJECT = "Welcome";
+    private static final String WELCOME_SUBJECT = "Welcome";
 
     private final JavaMailSender emailSender;
 
