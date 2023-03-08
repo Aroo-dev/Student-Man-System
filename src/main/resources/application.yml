@@ -1,0 +1,56 @@
+info:
+    app:
+        version: '@version@'
+    author: Artur Medrala
+    java:
+        version: '@java.version@'
+    mail: axxrxxo@gmail.com
+management:
+    endpoint:
+        health:
+            show-details: always
+        prometheus:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+metrics:
+    export:
+        prometheus:
+            enables: true
+server:
+    tomcat:
+        connection-timeout: 120
+    error:
+        include-message: always
+spring:
+    cache:
+        caffeine:
+            spec: expireAfterWrite=300s
+        jcache:
+            config: classpath:ehcache.xml
+    datasource:
+        password: Henry6591@
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+    flyway:
+        baseline-on-migrate: false
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        show-sql: true
+    mail:
+        host: smtp.gmail.com
+        password: ${MAIL_PASSWORD}
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: ${MAIL_USERNAME}

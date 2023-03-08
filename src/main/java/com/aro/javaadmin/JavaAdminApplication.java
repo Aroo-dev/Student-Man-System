@@ -10,8 +10,6 @@ public class JavaAdminApplication  {
 
 
     public static void main(String[] args) {
-        System.out.println("dwawaddwadwawaddwadwawaddwa");
-        System.out.println("dwawaddwaawaddwadwawaddwadwawaddwa");
         SpringApplication.run(JavaAdminApplication.class, args);
     }
 

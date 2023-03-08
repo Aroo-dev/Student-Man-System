@@ -1,14 +1,27 @@
 package com.aro.javaadmin.course;
 
-
 import com.aro.javaadmin.instructor.Instructor;
 import com.aro.javaadmin.student.Student;
-import lombok.*;
-
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +29,6 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
-
 @Table(name = "courses")
 public class Course {
 
@@ -41,7 +53,6 @@ public class Course {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id", nullable = false, referencedColumnName = "instructor_id")
-
     private Instructor instructor;
 
     public Course(String name, Duration courseDuration, String courseDescription, Instructor instructor) {

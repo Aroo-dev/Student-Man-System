@@ -8,7 +8,6 @@ public class BadAuthenticationException extends RuntimeException{
 
     private final String fieldName;
 
-
     public BadAuthenticationException(String fieldName) {
         super(String.format("You are not authorized to update this %s's data", fieldName));
         this.fieldName = fieldName;

@@ -5,7 +5,6 @@ import com.aro.javaadmin.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +31,7 @@ public class Instructor {
     private String summary;
 
     @OrderBy("name")
-    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<Course> courses = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.REMOVE)

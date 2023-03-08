@@ -1,18 +1,15 @@
 package com.aro.javaadmin.course;
 
 import com.aro.javaadmin.instructor.InstructorDTO;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.Duration;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@AllArgsConstructor
 public class CourseDTO {
-
-
 
     private Long courseId;
     private String name;
@@ -26,35 +23,12 @@ public class CourseDTO {
         this.description = description;
     }
 
-    public CourseDTO(String name, Duration duration, String description, InstructorDTO instructor) {
-        this.name = name;
-        this.duration = duration;
-        this.description = description;
-        this.instructor = instructor;
+    public CourseDTO() {
     }
 
-    public CourseDTO(Long courseId, String name, Duration duration, String description) {
-        this.courseId = courseId;
-        this.name = name;
-        this.duration = duration;
-        this.description = description;
-    }
-
-    public CourseDTO(Long courseId, String name, Duration duration, String description, InstructorDTO instructor) {
-        this.courseId = courseId;
-        this.name = name;
-        this.duration = duration;
-        this.description = description;
-        this.instructor = instructor;
-    }
-
-    @Override
     public String toString() {
-        return "CourseDTO{" +
-                "courseId=" + courseId +
-                ", courseName='" + name + '\'' +
-                ", courseDuration='" + duration + '\'' +
-                ", courseDescription='" + description + '\'' +
-                '}';
+        return "CourseDTO(courseId=" + this.getCourseId() + ", name=" + this.getName() +
+                ", duration=" + this.getDuration() + ", description=" + this.getDescription() +
+                ", instructor=" + this.getInstructor().getFirstName() + this.instructor.getUser().getEmail() + ")";
     }
 }

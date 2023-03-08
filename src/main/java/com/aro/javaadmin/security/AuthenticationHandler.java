@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class AuthenticationHandler {
+public class AuthenticationHandler<T> {
 
     private final StudentRepository studentRepository;
     private final InstructorRepository instructorRepository;

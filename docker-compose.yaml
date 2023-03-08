@@ -16,10 +16,6 @@ services:
     volumes:
       - ./dbstore:/var/lib/postgresql/data
 
-
-
-
-
   prometheus:
     image: prom/prometheus
     container_name: prometheus
@@ -49,12 +45,6 @@ services:
         - grafana-config:/var/lib/grafana
     depends_on:
       - prometheus
-
-
-
-
-
-
 
 volumes:
   prom_data:

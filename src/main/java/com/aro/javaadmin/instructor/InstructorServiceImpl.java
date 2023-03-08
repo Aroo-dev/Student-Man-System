@@ -1,7 +1,6 @@
 package com.aro.javaadmin.instructor;
 
-import com.aro.javaadmin.email.EmailSenderService;
-import com.aro.javaadmin.course.Course;
+import com.aro.javaadmin.email.EmailSenderServiceImpl;
 import com.aro.javaadmin.course.CourseService;
 import com.aro.javaadmin.exception.ResourceNotFoundException;
 import com.aro.javaadmin.security.AuthenticationHandler;
@@ -14,19 +13,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
+
 class InstructorServiceImpl implements InstructorService {
     private static final Logger logger = LoggerFactory.getLogger(InstructorServiceImpl.class);
-    private final EmailSenderService emailSenderService;
+    public static final String INSTRUCTOR_NOT_FOUND = "Instructor not found";
+    private final EmailSenderServiceImpl emailSenderService;
     private final ModelMapper modelMapper;
     private final InstructorRepository instructorRepository;
     private final UserService userService;
@@ -50,21 +53,23 @@ class InstructorServiceImpl implements InstructorService {
     @Override
     public InstructorDTO findInstructorById(Long id) {
         Instructor instructor = instructorRepository
-                .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Instructor", "id", id));
-        if (instructor == null) {
-            logger.warn("Instructor not found");
-        }
-
+                .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, INSTRUCTOR_NOT_FOUND));
         return modelMapper.map(instructor, InstructorDTO.class);
     }
 
     @Override
     public InstructorDTO findInstructorByEmail(String email) {
-        Instructor instructorByUserEmail = instructorRepository.findInstructorByUserEmail(email);
-        return modelMapper.map(instructorByUserEmail, InstructorDTO.class);
+        try{
+            Instructor instructorByUserEmail = instructorRepository.findInstructorByUserEmail(email);
+
+            return modelMapper.map(instructorByUserEmail, InstructorDTO.class);
+        }catch (IllegalArgumentException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,INSTRUCTOR_NOT_FOUND);
+        }
     }
 
+    @Override
+    @Transactional
     public InstructorDTO createInstructor(InstructorDTO instructorDTO) {
         String password = instructorDTO.getUser().getPassword();
         User user = userService.
@@ -79,6 +84,7 @@ class InstructorServiceImpl implements InstructorService {
     }
 
     @Override
+    @Transactional
     public InstructorDTO updateInstructor(InstructorDTO instructorDTO, Authentication authentication) {
         Instructor instructor = authenticationHelper.
                 authenticateInstructor(instructorDTO, authentication);
@@ -101,15 +107,12 @@ class InstructorServiceImpl implements InstructorService {
 
     }
 
-
+    @Transactional
     public void removeInstructor(Long id) {
         Instructor instructor = instructorRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Instructor", "id", id));
 
-        for (Course course : instructor.getCourses()) {
-            courseService.removeCourse(course.getCourseId());
-        }
         instructorRepository.deleteById(instructor.getInstructorId());
     }
 }
