@@ -1,12 +1,12 @@
 package com.aro.javaadmin.user;
 
-
 import com.aro.javaadmin.role.Role;
 import com.aro.javaadmin.role.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

@@ -16,10 +16,9 @@ public class GlobalConfigClass {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    ModelMapper modelMapper(){
+    ModelMapper modelMapper() {
         return new ModelMapper();
     }
-
-    //TODO change dtos in every class. for now it stays this way
 }

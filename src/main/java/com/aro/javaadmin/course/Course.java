@@ -2,8 +2,12 @@ package com.aro.javaadmin.course;
 
 import com.aro.javaadmin.instructor.Instructor;
 import com.aro.javaadmin.student.Student;
-import lombok.*;
-
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.EqualsAndHashCode;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;

@@ -1,0 +1,7 @@
+root = true
+
+[.java]
+ij_java_use_single_class_imports = true
+ij_java_class_count_to_use_import_on_demand = 2147483647
+ij_java_names_count_to_use_import_on_demand = 2147483647
+ij_java_packages_to_use_import_on_demand = off

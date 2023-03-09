@@ -14,8 +14,6 @@ public class EmailSenderServiceImpl {
     private static final String WELCOME_SUBJECT = "Welcome";
     private final JavaMailSender emailSender;
 
-
-
     public void sendEmail( String email, String text) {
 
         SimpleMailMessage message = new SimpleMailMessage();

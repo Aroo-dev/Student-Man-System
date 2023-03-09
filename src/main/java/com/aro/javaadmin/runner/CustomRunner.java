@@ -10,9 +10,9 @@ import com.aro.javaadmin.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import java.time.Duration;
 import java.util.Arrays;
+
 
 @RequiredArgsConstructor
 @Component

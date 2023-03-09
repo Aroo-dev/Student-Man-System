@@ -1,10 +1,9 @@
 package com.aro.javaadmin.role;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
+
 
 @RequiredArgsConstructor
 @Service

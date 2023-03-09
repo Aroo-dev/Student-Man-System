@@ -15,8 +15,12 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static com.aro.javaadmin.exception.ExceptionUtil.EMAIL_ALREADY_REGISTERED;
+import static com.aro.javaadmin.exception.ExceptionUtil.EMAIL_NOT_FOUND;
+import static com.aro.javaadmin.exception.ExceptionUtil.NOT_AUTHORIZED_TO_UPDATE_INSTRUCTOR_S_DATA;
+import static com.aro.javaadmin.exception.ExceptionUtil.RESOURCE_NOT_FOUND;
+import static com.aro.javaadmin.exception.ExceptionUtil.STUDENT_ALREADY_EXIST;
 
-import static com.aro.javaadmin.exception.ExceptionUtil.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {

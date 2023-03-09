@@ -20,7 +20,6 @@ public class AuthenticationHandler<T> {
     private final InstructorRepository instructorRepository;
 
 
-
     public Instructor authenticateInstructor(InstructorDTO instructorDTO, Authentication authentication) {
         String email = authentication.getName();
         Instructor instructor = instructorRepository
@@ -29,31 +28,21 @@ public class AuthenticationHandler<T> {
                         ("Instructor", "id", instructorDTO.getInstructorId()));
         if (!instructor.getUser().getEmail().equals(email)) {
             throw new BadAuthenticationException("instructor");
-
-
         }
         return instructor;
-
-
     }
 
     public Student authenticateStudent(StudentDTO studentDTO, Authentication authentication) {
         String email = authentication.getName();
-       Student student = studentRepository
+        Student student = studentRepository
                 .findById(studentDTO.getStudentId())
                 .orElseThrow(() -> new ResourceNotFoundException
                         ("Instructor", "id", studentDTO.getStudentId()));
         if (!student.getUser().getEmail().equals(email)) {
             throw new BadAuthenticationException("student");
-
-
         }
         return student;
-
-
     }
-
-
 
 
 }

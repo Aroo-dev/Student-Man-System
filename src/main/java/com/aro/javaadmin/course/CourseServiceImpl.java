@@ -13,18 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
-import java.util.Scanner;
 import java.util.stream.Collectors;
+
 
 @Transactional
 @Service
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
     
-
-    private static Scanner scanner = new Scanner(System.in);
     private final ModelMapper modelMapper;
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
@@ -32,11 +29,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseDTO getCourseById(Long id) {
-        String java = scanner.next("Java d");
-        String java1 = scanner.next("Java");
-
         Course course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course", "id", id));
-        System.out.println();
         return modelMapper.map(course, CourseDTO.class);
     }
 
@@ -118,7 +111,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void removeCourse(Long courseId) {
         courseRepository.deleteById(courseId);
-
     }
 
     @Override
