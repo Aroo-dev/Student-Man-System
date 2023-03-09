@@ -1,20 +1,19 @@
 package com.aro.javaadmin.user;
 
-
 import com.aro.javaadmin.role.Role;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
+
+
 @Getter
 @Setter
 @Entity
 @Table(name ="users")
 public class User {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +21,16 @@ public class User {
     private Long userId;
 
     @Email
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password", length = 100)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @JoinTable(name = "user_role", joinColumns =
+            {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
 
 
@@ -52,7 +53,7 @@ public class User {
     }
 
 
-    public void assignRoleToUser(Role role) {
+    public void addRoleToUser(Role role) {
         roles.add(role);
     }
 

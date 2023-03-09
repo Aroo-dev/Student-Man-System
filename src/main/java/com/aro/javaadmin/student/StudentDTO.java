@@ -1,8 +1,9 @@
 package com.aro.javaadmin.student;
 
-import com.aro.javaadmin.user.User;
+import com.aro.javaadmin.user.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -17,5 +18,5 @@ public class StudentDTO {
 
     private String level;
 
-    private User user;
+    private UserDTO user;
 }

@@ -3,8 +3,10 @@ package com.aro.javaadmin.student;
 
 import com.aro.javaadmin.course.Course;
 import com.aro.javaadmin.user.User;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

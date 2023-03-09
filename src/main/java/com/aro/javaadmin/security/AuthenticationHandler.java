@@ -20,6 +20,7 @@ public class AuthenticationHandler<T> {
     private final InstructorRepository instructorRepository;
 
 
+
     public Instructor authenticateInstructor(InstructorDTO instructorDTO, Authentication authentication) {
         String email = authentication.getName();
         Instructor instructor = instructorRepository

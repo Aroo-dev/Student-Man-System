@@ -93,5 +93,12 @@ public class InstructorRestController {
 
     }
 
+    @PreAuthorize("hasAuthority('Admin')")
+    @PutMapping("/role/{id}")
+    public ResponseEntity<InstructorDTO> assignStudentRoleToInstructor (@PathVariable() Long id){
+        InstructorDTO instructorDTO = instructorService.assignStudentRoleToInstructorById(id);
+        return new ResponseEntity<>(instructorDTO,HttpStatus.OK);
+    }
+
 
 }

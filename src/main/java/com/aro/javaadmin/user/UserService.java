@@ -7,6 +7,6 @@ public interface UserService {
 
     User createUser(String email, String password);
 
-    void assignRoleToStudent(String email, String roleName);
+    void assignRoleToUser(String email, String roleName);
 
 }

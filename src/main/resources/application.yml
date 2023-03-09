@@ -38,7 +38,7 @@ spring:
         baseline-on-migrate: false
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: create
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQL95Dialect

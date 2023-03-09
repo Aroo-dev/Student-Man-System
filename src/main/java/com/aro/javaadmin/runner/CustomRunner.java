@@ -5,16 +5,14 @@ import com.aro.javaadmin.course.CourseService;
 import com.aro.javaadmin.instructor.InstructorDTO;
 import com.aro.javaadmin.instructor.InstructorService;
 import com.aro.javaadmin.role.RoleService;
-import com.aro.javaadmin.student.StudentDTO;
 import com.aro.javaadmin.user.UserDTO;
 import com.aro.javaadmin.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.actuate.endpoint.web.Link;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Component
@@ -69,7 +67,7 @@ public class CustomRunner implements CommandLineRunner {
 
     private void createAdmin() {
         userService.createUser("axxrxxo@gmail.com", "Henry6591@");
-        userService.assignRoleToStudent("axxrxxo@gmail.com", "Admin");
+        userService.assignRoleToUser("axxrxxo@gmail.com", "Admin");
 
     }
 

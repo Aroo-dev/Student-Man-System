@@ -8,6 +8,8 @@ import java.util.List;
 @Service
 public interface InstructorService {
 
+    InstructorDTO assignStudentRoleToInstructorById(Long id);
+
     Page<InstructorDTO> findInstructorByNameOrLastName(String name, int page, int size);
 
     InstructorDTO findInstructorById(Long id);

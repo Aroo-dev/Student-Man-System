@@ -91,8 +91,6 @@ public class CourseServiceImpl implements CourseService {
                 findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student", "id", courseId));
         course.assignStudentToCourse(student);
-
-
     }
 
     @Override
@@ -104,7 +102,6 @@ public class CourseServiceImpl implements CourseService {
                 .stream()
                 .map(course -> modelMapper.map(course, CourseDTO.class))
                 .collect(Collectors.toList()),getPageRequest(page,size),coursesByStudentId.getTotalElements());
-
     }
 
     @Override

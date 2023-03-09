@@ -10,6 +10,7 @@ public class JavaAdminApplication  {
 
 
     public static void main(String[] args) {
+        System.out.println("chuj w dupe arowi");
         SpringApplication.run(JavaAdminApplication.class, args);
     }
 

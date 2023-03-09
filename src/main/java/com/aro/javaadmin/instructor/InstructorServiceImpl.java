@@ -33,8 +33,16 @@ class InstructorServiceImpl implements InstructorService {
     private final ModelMapper modelMapper;
     private final InstructorRepository instructorRepository;
     private final UserService userService;
-    private final CourseService courseService;
     private final AuthenticationHandler authenticationHelper;
+
+    @Transactional
+    public InstructorDTO assignStudentRoleToInstructorById(Long id){
+        InstructorDTO instructorFoundById = getInstructorById(id);
+        String email = instructorFoundById.getUser().getEmail();
+        userService.assignRoleToUser(email,"Student");
+        return modelMapper.map(instructorRepository.findById(id), InstructorDTO.class);
+
+    }
 
     @Override
     public Page<InstructorDTO> findInstructorByNameOrLastName(String name, int page, int size) {
@@ -52,6 +60,10 @@ class InstructorServiceImpl implements InstructorService {
 
     @Override
     public InstructorDTO findInstructorById(Long id) {
+        return getInstructorById(id);
+    }
+
+    private InstructorDTO getInstructorById(Long id) {
         Instructor instructor = instructorRepository
                 .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, INSTRUCTOR_NOT_FOUND));
         return modelMapper.map(instructor, InstructorDTO.class);
@@ -73,13 +85,15 @@ class InstructorServiceImpl implements InstructorService {
     public InstructorDTO createInstructor(InstructorDTO instructorDTO) {
         String password = instructorDTO.getUser().getPassword();
         User user = userService.
-                createUser(instructorDTO.getUser().getEmail(), instructorDTO.getUser().getPassword());
-        userService.assignRoleToStudent(user.getEmail(), "Instructor");
+                createUser(instructorDTO.getUser().getEmail(),
+                        instructorDTO.getUser().getPassword());
+        userService.assignRoleToUser(user.getEmail(), "Instructor");
         Instructor instructor = modelMapper.map(instructorDTO, Instructor.class);
         instructor.setUser(user);
         Instructor savedInstructor = instructorRepository.save(instructor);
         emailSenderService.sendEmail(savedInstructor.getUser().getEmail(),
-                "Please consider changing your password." + " Your default password is " + password);
+                "Please consider changing your password."
+                        + " Your default password is " + password);
         return modelMapper.map(savedInstructor, InstructorDTO.class);
     }
 

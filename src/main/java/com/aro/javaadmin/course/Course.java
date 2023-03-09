@@ -2,11 +2,8 @@ package com.aro.javaadmin.course;
 
 import com.aro.javaadmin.instructor.Instructor;
 import com.aro.javaadmin.student.Student;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
@@ -22,7 +19,7 @@ import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -47,12 +44,16 @@ public class Course {
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "enrolled", joinColumns = {@JoinColumn(name = "course_fk")}, inverseJoinColumns = {@JoinColumn(name = "student_fk")})
+    @JoinTable(name = "enrolled",
+            joinColumns = {@JoinColumn(name = "course_fk")},
+            inverseJoinColumns = {@JoinColumn(name = "student_fk")})
     private Set<Student> students = new HashSet<>();
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instructor_id", nullable = false, referencedColumnName = "instructor_id")
+    @JoinColumn(name = "instructor_id",
+            nullable = false,
+            referencedColumnName = "instructor_id")
     private Instructor instructor;
 
     public Course(String name, Duration courseDuration, String courseDescription, Instructor instructor) {
@@ -67,20 +68,9 @@ public class Course {
         student.getCourses().add(this);
     }
 
-
     public void removeStudentFromCourse(Student student) {
         this.students.remove(student);
         student.getCourses().remove(this);
     }
 
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "courseId=" + courseId +
-                ", name='" + name + '\'' +
-                ", duration=" + duration +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

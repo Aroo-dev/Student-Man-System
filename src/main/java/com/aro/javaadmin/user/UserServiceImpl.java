@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,27 +20,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmail(String email) {
-           return userRepository.findUserByEmail(email);
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
-    public User createUser( String email, String password) {
+    @Transactional
+    public User createUser(String email, String password) {
         //TODO generate random password by default, and then send it to user so he/she can change it
         String encodedPassword = passwordEncoder.encode(password);
-        return userRepository.save( new User(email, encodedPassword));
+        return userRepository.save(new User(email, encodedPassword));
     }
 
     @Override
-    public void assignRoleToStudent(String email, String roleName) {
+    @Transactional
+    public void assignRoleToUser(String email, String roleName) {
         User user = userRepository.findUserByEmail(email);
 
         Role role = roleRepository.findByName(roleName);
-            if (role == null){
-                throw new NullPointerException(ROLE_NOT_FOUND);
-            }
-        user.assignRoleToUser(role);
-
-
+        if (role == null) {
+            throw new NullPointerException(ROLE_NOT_FOUND);
+        }
+        user.addRoleToUser(role);
+        userRepository.save(user);
     }
-
 }

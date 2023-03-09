@@ -5,11 +5,13 @@ import com.aro.javaadmin.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 
+@ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "instructors")
@@ -34,7 +36,7 @@ public class Instructor {
     @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<Course> courses = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
@@ -44,14 +46,5 @@ public class Instructor {
         this.lastName = lastName;
         this.user = user;
         this.summary = summary;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Instructor{" + "instructorId='" +
-                instructorId + '\'' + ", firstName='"
-                + firstName + '\'' + ", lastName='" +
-                lastName + '\'' + ", summary='" + summary + '\'' + '}';
     }
 }

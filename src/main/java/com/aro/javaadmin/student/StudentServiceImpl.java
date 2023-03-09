@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class StudentServiceImpl implements StudentService {
 
-    private final AuthenticationHandler authenticationHelper;
+    private final AuthenticationHandler<Student> authenticationHelper;
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
     private final UserService userService;
@@ -37,8 +37,9 @@ public class StudentServiceImpl implements StudentService {
             throw new EmailAlreadyTakenException("Email", studentDTO.getUser().getEmail());
         }
 
-        User user = userService.createUser(studentDTO.getUser().getEmail(), studentDTO.getUser().getPassword());
-        userService.assignRoleToStudent(user.getEmail(), "Student");
+        User user = userService
+                .createUser(studentDTO.getUser().getEmail(), studentDTO.getUser().getPassword());
+        userService.assignRoleToUser(user.getEmail(), "Student");
         Student student = modelMapper.map(studentDTO, Student.class);
         student.setUser(user);
         studentRepository.save(student);
@@ -55,7 +56,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public void removeStudent(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Student", "id", id));
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "id", id));
         for (Course course : student.getCourses()) {
             course.removeStudentFromCourse(student);
         }
@@ -65,7 +67,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public StudentDTO findStudentById(Long studentId) {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("Student", "id", studentId));
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "id", studentId));
         return modelMapper.map(student, StudentDTO.class);
 
     }
@@ -88,8 +91,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDTO findStudentByUserEmail(String email) {
         Student student = studentRepository.findStudentByUserEmail(email);
-        if (student == null){
-            throw new EmailNotFoundException("Email",email);
+        if (student == null) {
+            throw new EmailNotFoundException("Email", email);
         }
 
         return modelMapper.map(student, StudentDTO.class);

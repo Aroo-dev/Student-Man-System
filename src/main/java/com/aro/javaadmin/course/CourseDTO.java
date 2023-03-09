@@ -2,12 +2,10 @@ package com.aro.javaadmin.course;
 
 import com.aro.javaadmin.instructor.InstructorDTO;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import java.time.Duration;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class CourseDTO {
 
@@ -24,11 +22,5 @@ public class CourseDTO {
     }
 
     public CourseDTO() {
-    }
-
-    public String toString() {
-        return "CourseDTO(courseId=" + this.getCourseId() + ", name=" + this.getName() +
-                ", duration=" + this.getDuration() + ", description=" + this.getDescription() +
-                ", instructor=" + this.getInstructor().getFirstName() + this.instructor.getUser().getEmail() + ")";
     }
 }
