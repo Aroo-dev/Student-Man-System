@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @Configuration
 public class JWTHelper {
-    private static final long EXPIRE_ACCESS_TOKEN = TimeUnit.MINUTES.toSeconds(1000);
+    private static final long EXPIRE_ACCESS_TOKEN = TimeUnit.MINUTES.toSeconds(10);
 
-    private static final long EXPIRE_REFRESH_TOKEN = TimeUnit.MINUTES.toSeconds(10000);
+    private static final long EXPIRE_REFRESH_TOKEN = TimeUnit.MINUTES.toSeconds(100);
 
     private static final String ISSUER = "springBootApp";
 

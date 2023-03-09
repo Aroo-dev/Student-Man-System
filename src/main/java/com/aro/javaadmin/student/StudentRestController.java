@@ -4,6 +4,8 @@ package com.aro.javaadmin.student;
 import com.aro.javaadmin.course.CourseDTO;
 import com.aro.javaadmin.course.CourseService;
 import com.aro.javaadmin.user.UserService;
+import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.headers.Header;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -24,7 +26,7 @@ public class StudentRestController {
 
     @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/{studentId}")
-    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId) {
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId, @RequestHeader("security") String header) {
         StudentDTO studentById = studentService.findStudentById(studentId);
         return new ResponseEntity<>(studentById, HttpStatus.OK);
     }
@@ -48,47 +50,46 @@ public class StudentRestController {
 
     @PreAuthorize("hasAuthority('Admin')")
     @PostMapping()
-    public ResponseEntity<StudentDTO> saveStudent( @RequestBody StudentDTO studentDTO){
+    public ResponseEntity<StudentDTO> saveStudent(@RequestBody StudentDTO studentDTO) {
         StudentDTO student = studentService.createStudent(studentDTO);
-        return new ResponseEntity<>( student, HttpStatus.CREATED);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('Student')")
     @PutMapping("/{studentId}")
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable Long studentId, Authentication authentication){
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable Long studentId, Authentication authentication) {
         studentDTO.setStudentId(studentId);
-        StudentDTO student = studentService.updateStudent(studentDTO, authentication );
+        StudentDTO student = studentService.updateStudent(studentDTO, authentication);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
 
     @PreAuthorize("hasAuthority('Admin')")
     @GetMapping()
-    public ResponseEntity<StudentDTO> findStudentByEmail(  @RequestParam (name ="email") String email ){
+    public ResponseEntity<StudentDTO> findStudentByEmail(@RequestParam(name = "email") String email) {
         StudentDTO studentByUserEmail = studentService.findStudentByUserEmail(email);
-        return new ResponseEntity<>(studentByUserEmail,HttpStatus.OK);
+        return new ResponseEntity<>(studentByUserEmail, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('Student')")
     @GetMapping("{studentId}/courses")
     public ResponseEntity<Page<CourseDTO>> getStudentEnrolledCoursesById(@PathVariable Long studentId,
-                                                                @RequestParam(name = "page", defaultValue = "0") int page,
-                                                                @RequestParam(name = "size", defaultValue = "6") int size)   {
+                                                                         @RequestParam(name = "page", defaultValue = "0") int page,
+                                                                         @RequestParam(name = "size", defaultValue = "6") int size) {
 
         Page<CourseDTO> courses = courseService.fetchCoursesForStudents(studentId, page, size);
-        return new ResponseEntity<>(courses,HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
+
     @PreAuthorize("hasAuthority('Student')")
     @GetMapping("{studentId}/available-courses")
     public ResponseEntity<Page<CourseDTO>> getStudentNonEnrolledCoursesById(@PathVariable Long studentId,
-                                                                         @RequestParam(name = "page", defaultValue = "0") int page,
-                                                                         @RequestParam(name = "size", defaultValue = "6") int size)   {
+                                                                            @RequestParam(name = "page", defaultValue = "0") int page,
+                                                                            @RequestParam(name = "size", defaultValue = "6") int size) {
 
         Page<CourseDTO> courses = courseService.fetchNotEnrolledCoursesForStudents(studentId, page, size);
-        return new ResponseEntity<>(courses,HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
-
-
 
 
 }
