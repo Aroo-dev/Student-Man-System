@@ -14,15 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     public static final String ROLE_NOT_FOUND = "Role not found";
+    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
-
+    
     @Override
     @Transactional
     public User createUser(String email, String password) {

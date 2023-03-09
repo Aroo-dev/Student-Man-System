@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query(value = "select * from courses as c where c.course_id in (select  e.course_fk from enrolled as e where e.student_fk =:studentId)", nativeQuery = true)
     Page<Course> findCoursesByStudentId(@Param("studentId") Long studentId, Pageable pageable);
-
 
     Page<Course> findCourseByNameContains(String keyword, Pageable pageable);
 
@@ -20,9 +20,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     Page<Course> getNonEnrolledCourses(@Param("studentId") Long studentId, Pageable pageable);
 
 
-    Page<Course> findCoursesByInstructorInstructorId( Long instructorId, Pageable pageable);
-
-
-
+    Page<Course> findCoursesByInstructorInstructorId(Long instructorId, Pageable pageable);
 
 }
