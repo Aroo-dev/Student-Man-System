@@ -32,7 +32,7 @@ public class StudentRestController {
 
     @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/{studentId}")
-    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId, @RequestHeader("security") String header) {
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId) {
         StudentDTO studentById = studentService.findStudentById(studentId);
         return new ResponseEntity<>(studentById, HttpStatus.OK);
     }
