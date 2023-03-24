@@ -1,6 +1,6 @@
 package com.aro.javaadmin.instructor;
 
-import com.aro.javaadmin.course.CourseDTO;
+import com.aro.javaadmin.course.CourseDTOrequest;
 import com.aro.javaadmin.course.CourseService;
 import com.aro.javaadmin.exception.EmailAlreadyTakenException;
 import com.aro.javaadmin.user.User;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 
@@ -31,6 +32,7 @@ public class InstructorRestController {
     private final InstructorService instructorService;
     private final CourseService courseService;
     private final UserService userService;
+
 
     @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/find")
@@ -85,10 +87,10 @@ public class InstructorRestController {
     }
     @PreAuthorize("hasAnyAuthority('Admin','Instructor')")
     @GetMapping("/{instructorId}/courses")
-    public ResponseEntity<Page<CourseDTO>> getCoursesByInstructorId(@PathVariable Long instructorId,
-                                                                    @RequestParam(name = "page", defaultValue = "0") int page,
-                                                                    @RequestParam(name = "size", defaultValue = "5") int size) {
-        Page<CourseDTO> coursesFound = courseService.fetchCoursesForInstructorByInstructorId(instructorId, page, size);
+    public ResponseEntity<Page<CourseDTOrequest>> getCoursesByInstructorId(@PathVariable Long instructorId,
+                                                                           @RequestParam(name = "page", defaultValue = "0") int page,
+                                                                           @RequestParam(name = "size", defaultValue = "5") int size) {
+        Page<CourseDTOrequest> coursesFound = courseService.fetchCoursesForInstructorByInstructorId(instructorId, page, size);
         return new ResponseEntity<>(coursesFound, HttpStatus.OK);
     }
 

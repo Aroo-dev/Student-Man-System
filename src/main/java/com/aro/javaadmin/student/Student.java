@@ -1,6 +1,7 @@
 package com.aro.javaadmin.student;
 
 import com.aro.javaadmin.course.Course;
+import com.aro.javaadmin.model.Person;
 import com.aro.javaadmin.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,23 +27,19 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "students")
-public class Student {
+public class Student extends Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id", nullable = false)
     private Long studentId;
-
-    @Column(name = "first_name", length = 45)
-    private String firstName;
-
-    @Column(name = "last_name", length = 45)
-    private String lastName;
 
     @Column(name = "level", length = 45)
     private String level;
 
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
+
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_fk",referencedColumnName = "user_id",nullable = false)
     private User user;

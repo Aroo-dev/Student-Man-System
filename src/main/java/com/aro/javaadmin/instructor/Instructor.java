@@ -1,7 +1,9 @@
 package com.aro.javaadmin.instructor;
 
 import com.aro.javaadmin.course.Course;
+import com.aro.javaadmin.model.Person;
 import com.aro.javaadmin.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,24 +25,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+@AllArgsConstructor
 @ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "instructors")
 @Getter
 @Setter
-public class Instructor {
+public class Instructor extends Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "instructor_id")
     private Long instructorId;
 
-    @Column(nullable = false, name = "first_name")
-    private String firstName;
 
-    @Column(nullable = false, name = "last_name")
-    private String lastName;
     @Column(nullable = false, name = "summary")
     private String summary;
 
@@ -52,11 +51,4 @@ public class Instructor {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    public Instructor(Long instructorId, String firstName, String lastName, User user, String summary) {
-        this.instructorId = instructorId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.user = user;
-        this.summary = summary;
-    }
 }

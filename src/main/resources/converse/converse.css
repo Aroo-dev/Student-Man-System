@@ -1,0 +1,128 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: sans-serif;
+    line-height: 1.4;
+}
+
+.product{
+    border: 4px solid black;
+    width: 825px;
+    margin: 60px auto;
+}
+
+.title{
+    margin-bottom: 0;
+    padding: 15px;
+}
+
+h2,h3{
+    font-size: 30px;
+}
+
+h2{
+    text-align: center;
+    background: #f7f7f7;
+    position: relative;
+
+
+
+}
+.color{
+    background-color:black;
+    height: 22px;
+    width: 22px;
+    display: inline-block;
+    margin-right: 13px;
+}
+.color-blue{
+    background-color:blue;
+    height: 22px;
+    width: 22px;
+}
+.color-brown{
+    background-color:brown;
+    height: 22px;
+    width: 22px;
+}
+.color-green{
+    background-color:green;
+    height: 22px;
+    width: 22px;
+}
+.color-orange{
+    background-color:orange;
+    height: 22px;
+    width: 22px;
+}
+.color-yellow{
+    background-color:yellow;
+    height: 22px;
+    width: 22px;
+}
+
+.more-info:link, .more-info:visited{
+    margin-bottom: 30px;
+    display: inline-block;
+    color: black;
+}
+.more-info:hover, .more-info:active{
+    text-decoration: none;
+}
+
+ul{
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+.button{
+    color: #f7f7f7;
+    background-color: #000;
+    border: none;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    padding: 15px;
+
+}
+.post-img{
+}
+.button:hover{
+    color: #000;
+    background-color:white;
+    border-top: 4px black solid ;
+}
+.details-title{
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+.details-list{
+    list-style: square;
+}
+.shipping{
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #777;
+    text-transform: uppercase;
+}
+
+h2::before{
+    content: "Sale";
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background-color: red;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    top: -20px;
+    left: -40px;
+    color: #f7f7f7;
+
+}

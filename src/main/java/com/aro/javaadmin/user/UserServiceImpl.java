@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     public static final String ROLE_NOT_FOUND = "Role not found";
-    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
     @Transactional
-    public User createUser(String email, String password) {
+    public User createUser(String email, String password, String confirmPassword) {
         //TODO generate random password by default, and then send it to user so he/she can change it
         String encodedPassword = passwordEncoder.encode(password);
         return userRepository.save(new User(email, encodedPassword));

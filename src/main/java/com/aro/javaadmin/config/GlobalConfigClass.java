@@ -28,6 +28,7 @@ public class GlobalConfigClass {
     ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
     @Bean
     public OpenAPI api(){
         return new OpenAPI()
@@ -38,4 +39,7 @@ public class GlobalConfigClass {
                 .info(new Info().title("Student Management System").version("I"))
                 .addSecurityItem(new SecurityRequirement().addList("JWT Token", Arrays.asList("read","write")));
     }
+
+
+
 }

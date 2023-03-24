@@ -6,7 +6,7 @@ import com.aro.javaadmin.instructor.Instructor;
 import com.aro.javaadmin.instructor.InstructorDTO;
 import com.aro.javaadmin.instructor.InstructorRepository;
 import com.aro.javaadmin.student.Student;
-import com.aro.javaadmin.student.StudentDTO;
+import com.aro.javaadmin.student.StudentRequestDTO;
 import com.aro.javaadmin.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -21,7 +21,7 @@ public class AuthenticationHandler<T> {
 
 
     public Instructor authenticateInstructor(InstructorDTO instructorDTO, Authentication authentication) {
-        String email = authentication.getName();
+        java.lang.String email = authentication.getName();
         Instructor instructor = instructorRepository
                 .findById(instructorDTO.getInstructorId())
                 .orElseThrow(() -> new ResourceNotFoundException
@@ -32,7 +32,7 @@ public class AuthenticationHandler<T> {
         return instructor;
     }
 
-    public Student authenticateStudent(StudentDTO studentDTO, Authentication authentication) {
+    public Student authenticateStudent(StudentRequestDTO studentDTO, Authentication authentication) {
         String email = authentication.getName();
         Student student = studentRepository
                 .findById(studentDTO.getStudentId())

@@ -2,34 +2,35 @@ package com.aro.javaadmin.course;
 
 import com.aro.javaadmin.instructor.Instructor;
 import com.aro.javaadmin.student.Student;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.EqualsAndHashCode;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
-import javax.persistence.ManyToMany;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
-@ToString
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+
 @Table(name = "courses")
 public class Course {
 
@@ -46,6 +47,9 @@ public class Course {
 
     @Column(name = "course_description", nullable = false, length = 500)
     private String description;
+
+    @Column(name = "category", nullable = false, length = 225)
+    private String category;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "enrolled",

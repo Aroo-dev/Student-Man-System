@@ -6,15 +6,15 @@ import org.springframework.security.core.Authentication;
 
 public interface StudentService {
 
-    StudentDTO createStudent(StudentDTO studentDTO);
+    StudentResponseDTO createStudent(StudentRequestDTO studentDTO);
 
-    Page<StudentDTO> findStudentsByName(String name, int page, int size);
+    Page<StudentRequestDTO> findStudentsByName(String name, int page, int size);
 
-    StudentDTO findStudentById(Long id);
+    StudentRequestDTO findStudentById(Long id);
 
     void removeStudent(Long id);
 
-    StudentDTO updateStudent(StudentDTO studentDTO, Authentication authentication);
+    StudentResponseDTO updateStudent(StudentRequestDTO studentDTO, Authentication authentication);
 
-    StudentDTO findStudentByUserEmail(String email);
+    StudentRequestDTO findStudentByUserEmail(String email);
 }

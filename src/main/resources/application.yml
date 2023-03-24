@@ -54,3 +54,6 @@ spring:
                     starttls:
                         enable: true
         username: ${MAIL_USERNAME}
+springdoc:
+    swagger-ui:
+        try-it-out-enabled: off

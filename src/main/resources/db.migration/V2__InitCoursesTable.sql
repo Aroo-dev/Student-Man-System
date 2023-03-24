@@ -22,7 +22,7 @@ CREATE TABLE courses (
                          course_id BIGINT GENERATED ALWAYS AS IDENTITY,
                          course_name VARCHAR(45) NOT NULL,
                          course_duration INTERVAL NOT NULL,
-                         course_description VARCHAR(500) NOT NULL,
+                         course_description text NOT NULL,
                          instructor_id BIGINT NOT NULL,
                          PRIMARY KEY (course_id),
                          FOREIGN KEY (instructor_id) REFERENCES instructors (instructor_id)

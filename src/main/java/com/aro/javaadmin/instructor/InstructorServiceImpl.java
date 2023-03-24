@@ -1,6 +1,6 @@
 package com.aro.javaadmin.instructor;
 
-import com.aro.javaadmin.email.EmailSenderServiceImpl;
+import com.aro.javaadmin.email.EmailSenderService;
 import com.aro.javaadmin.exception.ResourceNotFoundException;
 import com.aro.javaadmin.security.AuthenticationHandler;
 import com.aro.javaadmin.user.User;
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 
 class InstructorServiceImpl implements InstructorService {
     private static final Logger logger = LoggerFactory.getLogger(InstructorServiceImpl.class);
-    public static final String INSTRUCTOR_NOT_FOUND = "Instructor not found";
-    private final EmailSenderServiceImpl emailSenderService;
+    public static final java.lang.String INSTRUCTOR_NOT_FOUND = "Instructor not found";
+    private final EmailSenderService emailSenderService;
     private final ModelMapper modelMapper;
     private final InstructorRepository instructorRepository;
     private final UserService userService;
@@ -45,6 +45,9 @@ class InstructorServiceImpl implements InstructorService {
 
     @Override
     public Page<InstructorDTO> findInstructorByNameOrLastName(String name, int page, int size) {
+        if (size >100){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Page size cannot exceed 100");
+        }
         Page<Instructor> instructorsFoundByFirstNameOrLastNameContaining =
                 instructorRepository
                         .findInstructorByFirstNameOrLastNameContaining(name, PageRequest.of(page, size));
@@ -64,7 +67,8 @@ class InstructorServiceImpl implements InstructorService {
 
     private InstructorDTO getInstructorById(Long id) {
         Instructor instructor = instructorRepository
-                .findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, INSTRUCTOR_NOT_FOUND));
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, INSTRUCTOR_NOT_FOUND));
         return modelMapper.map(instructor, InstructorDTO.class);
     }
 
@@ -85,7 +89,7 @@ class InstructorServiceImpl implements InstructorService {
         String password = instructorDTO.getUser().getPassword();
         User user = userService.
                 createUser(instructorDTO.getUser().getEmail(),
-                        instructorDTO.getUser().getPassword());
+                        instructorDTO.getUser().getPassword(), instructorDTO.getUser().getPassword());
         userService.assignRoleToUser(user.getEmail(), "Instructor");
         Instructor instructor = modelMapper.map(instructorDTO, Instructor.class);
         instructor.setUser(user);
@@ -124,7 +128,7 @@ class InstructorServiceImpl implements InstructorService {
     public void removeInstructor(Long id) {
         Instructor instructor = instructorRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Instructor", "id", id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,INSTRUCTOR_NOT_FOUND));
 
         instructorRepository.deleteById(instructor.getInstructorId());
     }

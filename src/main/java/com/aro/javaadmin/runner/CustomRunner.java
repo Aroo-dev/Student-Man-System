@@ -1,15 +1,18 @@
 package com.aro.javaadmin.runner;
 
-import com.aro.javaadmin.course.CourseDTO;
+import com.aro.javaadmin.course.CourseDTOrequest;
 import com.aro.javaadmin.course.CourseService;
 import com.aro.javaadmin.instructor.InstructorDTO;
 import com.aro.javaadmin.instructor.InstructorService;
 import com.aro.javaadmin.role.RoleService;
-import com.aro.javaadmin.user.UserDTO;
+import com.aro.javaadmin.student.StudentRequestDTO;
+import com.aro.javaadmin.student.StudentService;
+import com.aro.javaadmin.user.UserDTORequest;
 import com.aro.javaadmin.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
 import java.time.Duration;
 import java.util.Arrays;
 
@@ -23,6 +26,7 @@ public class CustomRunner implements CommandLineRunner {
     private final UserService userService;
     private final InstructorService instructorService;
     private final CourseService courseService;
+    private final StudentService studentService;
 
 
     @Override
@@ -31,16 +35,23 @@ public class CustomRunner implements CommandLineRunner {
         createAdmin();
         createInstructor();
         createCourse();
+        createStudent();
+
+    }
+
+    private void createStudent() {
+        UserDTORequest userDTO = new UserDTORequest("artur@medrala.dev", "Henry6591@", "Henry6591@");
+        StudentRequestDTO student = new StudentRequestDTO("Artur", "Medrala", "amateur", userDTO);
+        student.setUser(userDTO);
+        studentService.createStudent(student);
 
     }
 
 
-
-
-        private void    createCourse() {
+    private void createCourse() {
 
         for (int i = 0; i < 20; i++) {
-            CourseDTO courseDTO = new CourseDTO("java"+1, Duration.ofMinutes(142), "String");
+            CourseDTOrequest courseDTO = new CourseDTOrequest("java" + 1, Duration.ofMinutes(142), "String", "Geography");
             InstructorDTO instructorDTO = new InstructorDTO();
             instructorDTO.setInstructorId(1L);
             courseDTO.setInstructor(instructorDTO);
@@ -56,7 +67,7 @@ public class CustomRunner implements CommandLineRunner {
             instructorDTO.setFirstName("Artur" + i + "FN");
             instructorDTO.setLastName("isntructor" + i + "LN");
             instructorDTO.setSummary("12e23123 " + i);
-            UserDTO userDTO = new UserDTO("Henry65" + i + "@gmail.com", "pass" + i);
+            UserDTORequest userDTO = new UserDTORequest("Henry65" + i + "@gmail.com", "pass" + i, "pass" + i);
             instructorDTO.setUser(userDTO);
             instructorService.createInstructor(instructorDTO);
 
@@ -66,7 +77,7 @@ public class CustomRunner implements CommandLineRunner {
     }
 
     private void createAdmin() {
-        userService.createUser("axxrxxo@gmail.com", "Henry6591@");
+        userService.createUser("axxrxxo@gmail.com", "Henry6591@","Henry6591@");
         userService.assignRoleToUser("axxrxxo@gmail.com", "Admin");
 
     }

@@ -1,17 +1,15 @@
 package com.aro.javaadmin.student;
 
-import com.aro.javaadmin.user.UserDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@Getter
+@NoArgsConstructor
 @Setter
-public class StudentDTO {
-
-    private Long studentId;
+@Getter
+public class StudentResponseDTO {
+    private String email;
     private String firstName;
     private String lastName;
     private String level;
-    private UserDTO user;
 }

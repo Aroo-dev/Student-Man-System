@@ -3,6 +3,7 @@ package com.aro.javaadmin.user;
 import com.aro.javaadmin.role.Role;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
+import javax.persistence.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Email
+
     @Column(name = "email")
     private String email;
 
@@ -42,8 +43,6 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
 
-
-
     public User() {
     }
 
@@ -51,6 +50,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
 
     @Override
     public String toString() {

@@ -2,24 +2,28 @@ package com.aro.javaadmin.course;
 
 import org.springframework.data.domain.Page;
 
+import java.util.Map;
+
 public interface CourseService {
 
-    CourseDTO getCourseById(Long id);
+    Map<String, Long> xxx(String category);
 
-    CourseDTO createCourse(CourseDTO courseDTO);
+    CourseDTOrequest getCourseById(Long id);
 
-    CourseDTO updateCourse(CourseDTO courseDTO);
+    CourseDTOrequest createCourse(CourseDTOrequest courseDTO);
 
-    Page<CourseDTO> findCoursesByCourseName(String courseName, int page, int size);
+    CourseDTOrequest updateCourse(CourseDTOrequest courseDTO);
+
+    Page<CourseDTOrequest> findCoursesByCourseName(String courseName, int page, int size);
 
     void assignStudentToCourse(Long courseId, Long id);
 
-    Page<CourseDTO> fetchCoursesForStudents(Long studentId,  int page, int size);
+    Page<CourseDTOrequest> fetchCoursesForStudents(Long studentId, int page, int size);
 
 
-    Page<CourseDTO> fetchNotEnrolledCoursesForStudents(Long studentId, int page, int size);
+    Page<CourseDTOrequest> fetchNotEnrolledCoursesForStudents(Long studentId, int page, int size);
 
     void removeCourse(Long courseId);
 
-    Page<CourseDTO> fetchCoursesForInstructorByInstructorId(Long instructorId, int page, int size);
+    Page<CourseDTOrequest> fetchCoursesForInstructorByInstructorId(Long instructorId, int page, int size);
 }
